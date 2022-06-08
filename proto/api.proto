@@ -1,0 +1,91 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+service API{
+    rpc ListNames (ListNamesRequest) returns (ListNamesResponse) {}
+    rpc ListStat (ListStatRequest) returns (ListStatResponse) {}
+    rpc ListHist (ListHistRequest) returns (ListHistResponse) {}
+    rpc getPrice (PriceRequest) returns (PriceResponse) {}
+    rpc getStaticData (StaticDataRequest) returns (StaticDataResponse) {}
+}
+message ListNamesRequest{
+    FilterApi filterApi = 1;
+}
+message ListNamesResponse{
+    repeated string name = 1;
+}
+message ListStatRequest{
+    FilterApi FilterApi = 1;
+}
+message ListStatResponse{
+    repeated string nameApi = 1;
+    repeated string dateFirstListingApi = 2;
+    repeated string commitsApi = 3;
+    repeated string forksApi = 4;
+    repeated string startsApi = 5;
+    repeated string watchingApi = 6;
+    repeated string circulatingSupplyApi = 7;
+    repeated string totalSupplyApi = 8;
+    repeated string maxSupplyApi = 9;
+}
+message ListHistRequest{
+    FilterApi filterApi = 1;
+    string startDateApi = 2;
+    string endDateApi = 3;
+}
+message ListHistResponse{
+    repeated string nameApi = 1;
+    repeated double openApi = 2;
+    repeated double closeApi = 3;
+    repeated double highApi = 4;
+    repeated double lowApi = 5;
+    repeated double volumeApi = 6;
+    repeated double marketCapApi = 7;
+    repeated string dateApi = 8;
+}
+message PriceRequest{
+    string name = 1;
+    string startDateGHist = 2;
+    string endDateHist = 3;
+}
+message PriceResponse{
+    repeated double openPrice = 1;
+    repeated double closePrice = 2;
+    repeated double highPrice = 3;
+    repeated double lowPrice = 4;
+    repeated double volume = 5;
+    repeated double marketCap = 6;
+    repeated string datePrice = 7;
+}
+message StaticDataRequest{
+    string name = 1;
+}
+message StaticDataResponse{
+    string circulatingSupply = 1;
+    string totalSupply = 2;
+    string maxSupply = 3;
+    string dateFirstListing = 4;
+    optional string commits = 5;
+    optional string forks = 6;
+    optional string stars = 7;
+    optional string watching = 8;
+}
+message FilterApi{
+    repeated NumericalFilterApi numFilterApi = 1;
+    repeated string tag = 2;
+    repeated PropertyApi propertiesApi = 3;
+    repeated double valuesApi = 4;
+}
+enum PropertyApi{
+    volume = 0;
+    marketCap= 1;
+    open= 2;
+    close = 3;
+    high = 4;
+    low = 5;
+}
+enum NumericalFilterApi{
+    lt = 0;
+    gt = 1;
+}

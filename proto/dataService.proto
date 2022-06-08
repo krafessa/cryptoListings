@@ -1,0 +1,115 @@
+syntax = "proto3";
+package pb;
+option go_package = './pb';
+
+service DATA{
+    rpc getNames (NamesRequest) returns (NamesResponse) {}
+    rpc getStat (StatRequest) returns (StatResponse) {}
+    rpc getHist (HistRequest) returns (HistResponse) {}
+    rpc Price (PriceDataRequest) returns (PriceDataResponse) {}
+    rpc Stat (StatDataRequest) returns (StatDataResponse){}
+}
+message NamesRequest{
+    Filter filterDS = 1;
+}
+message NamesResponse{
+    repeated string nameDS = 1;
+}
+message StatRequest{
+    Filter filterDS = 1;
+}
+message StatResponse{
+    repeated string nameDS = 1;
+    repeated string circulatingSupplyDS = 2;
+    repeated string totalSupplyDS = 3;
+    repeated string maxSupplyDS = 4;
+    repeated string commitsDS = 5;
+    repeated string forksDS = 6;
+    repeated string starsDS = 7;
+    repeated string watchingDS = 8;
+    repeated string dateFirstListingDS = 9;
+}
+message HistRequest{
+    Filter filterDS = 2;  
+    string startDateDS = 3;
+    string endDateDS = 4;
+}
+message ListOpenPrice{
+    repeated double openPrice = 1;
+}
+message ListClosePrice{
+    repeated double closePrice = 1;
+}
+message ListHighPrice{
+    repeated double highPrice = 1;
+}
+message ListLowPrice{
+    repeated double lowPrice = 1;
+}
+message ListVolume{
+    repeated double volume = 1;
+}
+message ListMarketCap{
+    repeated double marketCap = 1;
+}
+message ListDates{
+    repeated string date = 1;
+}
+message HistResponse{
+    repeated string nameDS =1;
+    repeated ListOpenPrice listOpenPrice = 2;
+    repeated ListClosePrice listClosePrice = 3;
+    repeated ListHighPrice listHighPrice = 4;
+    repeated ListLowPrice listLowPrice = 5;
+    repeated ListVolume volumeDS = 6;
+    repeated ListMarketCap marketCapDS = 7;
+    repeated ListDates dateDS = 8;
+}
+message PriceDataRequest{
+    string nameDS = 1;
+    string startDateDS = 2;
+    string endDateDS = 3;
+}
+message PriceDataResponse{
+    repeated double openDS = 1;
+    repeated double closeDS = 2;
+    repeated double highDS = 3;
+    repeated double lowDS = 4;
+    repeated double volumeDS = 5;
+    repeated double marketcapDS = 6;
+    repeated string dateDS = 7;
+}
+message StatDataRequest{
+    string name = 1;
+}
+message StatDataResponse{
+    string circulatingSupplyDS = 1;
+    string totalSupplyDS = 2;
+    string maxSupplyDS = 3;
+    string dateFirstListingDS = 4;
+    optional string commitsDS = 5;
+    optional string forksDS = 6;
+    optional string starsDS = 7;
+    optional string watchingDS = 8;
+}
+enum NumericalFilter {
+    ltDS = 0;
+    gtDS = 1;
+}
+message CategoricalFilters{
+    string tagDS = 1;
+}
+enum Property {
+    volumeDS = 0;
+    marketCapDS = 1;
+    openDS = 2;
+    closeDS = 3;
+    highDS = 4;
+    lowDS = 5;
+}
+message Filter {
+    repeated NumericalFilter numfilterDS = 1;
+    repeated  CategoricalFilters catfilterDS = 2;
+    repeated Property propertiesDS = 3;
+    repeated double valuesDS = 4; 
+}
